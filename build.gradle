@@ -1,0 +1,38 @@
+
+plugins {
+  id 'org.springframework.boot' version '1.5.2.RELEASE'
+}
+
+apply plugin: 'groovy'
+
+repositories {
+  jcenter()
+  mavenCentral()
+}
+
+dependencies {
+
+  compile (
+      'org.springframework.boot:spring-boot-starter',
+      'org.codehaus.groovy:groovy-all:2.4.7',
+      'com.amazonaws:aws-lambda-java-core:1.1.0',
+      'com.amazonaws:aws-lambda-java-log4j:1.0.0'
+  )
+
+  // Use JUnit test framework
+  testCompile 'junit:junit:4.12'
+}
+
+// Task for building the zip file for upload
+task buildZip(type: Zip) {
+  // set the base name of the zip file
+  baseName = "${project.name}"
+  from compileGroovy
+  from processResources
+  into('lib') {
+    from configurations.runtime
+  }
+}
+
+build.dependsOn buildZip
+
