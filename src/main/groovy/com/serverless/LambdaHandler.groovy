@@ -2,7 +2,7 @@ package com.serverless
 
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestHandler
-import com.serverless.lambda.Dispatcher
+import com.serverless.service.DispatcherService
 import com.serverless.lambda.Request
 import com.serverless.lambda.Response
 import groovy.transform.Memoized
@@ -29,7 +29,7 @@ class LambdaHandler implements RequestHandler<Map, Response> {
   @Override
   Response handleRequest(Map input, Context context) {
     final Request request = new Request(input, context)
-    Dispatcher dispatcher = getApplicationContext().getBean(Dispatcher.class)
+    DispatcherService dispatcher = getApplicationContext().getBean(DispatcherService.class)
     return dispatcher.dispatch(request)
   }
 }

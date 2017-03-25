@@ -1,6 +1,6 @@
-package com.serverless.persistence.repositories
+package com.serverless.persistence.repository
 
-import com.serverless.persistence.entities.User
+import com.serverless.persistence.entity.User
 import groovy.transform.CompileStatic
 import org.springframework.data.repository.CrudRepository
 

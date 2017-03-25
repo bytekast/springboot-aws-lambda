@@ -1,4 +1,4 @@
-package com.serverless.persistence.entities
+package com.serverless.persistence.entity
 
 import groovy.transform.CompileStatic
 import groovy.transform.ToString

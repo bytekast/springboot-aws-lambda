@@ -1,20 +1,18 @@
-package com.serverless.handlers
+package com.serverless.handler
 
 import com.serverless.lambda.Request
 import com.serverless.lambda.Response
-import com.serverless.persistence.entities.User
-import com.serverless.persistence.repositories.UserRepository
+import com.serverless.persistence.entity.User
+import com.serverless.persistence.repository.UserRepository
 import groovy.json.JsonOutput
 import groovy.transform.CompileStatic
 import groovy.util.logging.Log4j
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.context.annotation.Scope
 import org.springframework.stereotype.Component
 
 import javax.annotation.PostConstruct
 
 @Component
-@Scope("prototype")
 @Log4j
 @CompileStatic
 class CreateUser implements Handler {

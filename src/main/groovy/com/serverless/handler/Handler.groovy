@@ -1,4 +1,4 @@
-package com.serverless.handlers
+package com.serverless.handler
 
 import com.serverless.lambda.Request
 import com.serverless.lambda.Response

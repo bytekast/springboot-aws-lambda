@@ -1,9 +1,9 @@
-package com.serverless.handlers
+package com.serverless.handler
 
 
 import com.serverless.lambda.Request
 import com.serverless.lambda.Response
-import com.serverless.persistence.repositories.UserRepository
+import com.serverless.persistence.repository.UserRepository
 import groovy.json.JsonOutput
 import groovy.transform.CompileStatic
 import groovy.util.logging.Log4j

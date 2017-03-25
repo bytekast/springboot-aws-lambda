@@ -1,7 +1,9 @@
-package com.serverless.lambda
+package com.serverless.service
 
 
-import com.serverless.handlers.Handler
+import com.serverless.handler.Handler
+import com.serverless.lambda.Request
+import com.serverless.lambda.Response
 import groovy.transform.CompileStatic
 import groovy.util.logging.Log4j
 import org.springframework.beans.factory.annotation.Autowired
@@ -10,7 +12,7 @@ import org.springframework.stereotype.Component
 @Component
 @CompileStatic
 @Log4j
-class Dispatcher {
+class DispatcherService {
 
   @Autowired
   List<Handler> handlers
