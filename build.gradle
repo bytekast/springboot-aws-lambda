@@ -11,12 +11,13 @@ repositories {
 }
 
 dependencies {
-
   compile (
       'org.springframework.boot:spring-boot-starter',
+      'org.springframework.boot:spring-boot-starter-data-jpa',
       'org.codehaus.groovy:groovy-all:2.4.7',
       'com.amazonaws:aws-lambda-java-core:1.1.0',
-      'com.amazonaws:aws-lambda-java-log4j:1.0.0'
+      'com.amazonaws:aws-lambda-java-log4j:1.0.0',
+      'com.h2database:h2'
   )
 
   // Use JUnit test framework
