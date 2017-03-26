@@ -10,5 +10,5 @@ Note: This example uses an in-memory H2 database that is created and initialized
 - Install [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
 ### Build and Deploy
-- To build, run `./gradlew clean buid`
+- To build, run `./gradlew clean build`
 - To deploy, run `serverless deploy`
