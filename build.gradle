@@ -17,7 +17,9 @@ dependencies {
       'org.codehaus.groovy:groovy-all:2.4.7',
       'com.amazonaws:aws-lambda-java-core:1.1.0',
       'com.amazonaws:aws-lambda-java-log4j:1.0.0',
-      'com.h2database:h2'
+      'com.h2database:h2',
+      'io.vertx:vertx-core:3.4.1',
+      'io.vertx:vertx-lang-groovy:3.4.1'
   )
 
   // Use JUnit test framework

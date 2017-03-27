@@ -1,20 +1,20 @@
 package com.serverless.lambda
 
-import com.amazonaws.services.lambda.runtime.Context
+import com.serverless.trait.ToJson
 import groovy.transform.ToString
 
 @ToString(includePackage = false)
-class Request {
-  private final Map input
-  private final Context context
+class Request implements ToJson {
+  final Map input
+  final String requestId
 
-  Request(final Map input, final Context context) {
+  Request(final String requestId, final Map input) {
     this.input = input
-    this.context = context
+    this.requestId = requestId
   }
 
   String requestId() {
-    context?.awsRequestId
+    requestId
   }
 
   String resourcePath() {
@@ -31,5 +31,9 @@ class Request {
 
   String pathParameter(String name) {
     input?.pathParameters?."${name}"?.trim()
+  }
+
+  String methodResource() {
+    "${httpMethod()}:${resourcePath()}"
   }
 }

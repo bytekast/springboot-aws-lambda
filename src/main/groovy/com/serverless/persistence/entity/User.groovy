@@ -19,7 +19,7 @@ class User {
   String firstName
   String lastName
 
-  User(){}
+  User() {}
 
   User(String firstName, String lastName) {
     this.firstName = firstName
