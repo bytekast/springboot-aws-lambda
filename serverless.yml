@@ -11,7 +11,7 @@ package:
 
 functions:
   users:
-    handler: com.serverless.LambdaHandler
+    handler: com.serverless.VertxHandler
     events:
       - http:
           path: users
