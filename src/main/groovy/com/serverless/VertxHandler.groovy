@@ -2,47 +2,56 @@ package com.serverless
 
 import com.amazonaws.services.lambda.runtime.Context
 import com.amazonaws.services.lambda.runtime.RequestHandler
-import groovy.transform.Memoized
-import groovy.util.logging.Log4j
+import io.vertx.core.AbstractVerticle
 import io.vertx.core.Vertx
 
 import java.util.concurrent.CompletableFuture
 import java.util.concurrent.TimeUnit
 
-@Log4j
 class VertxHandler implements RequestHandler<Map, Map> {
+
+  // Initialize Vertx instance and deploy UserService Verticle
+  final Vertx vertxInstance = {
+    System.setProperty('vertx.disableFileCPResolving', 'true')
+    final vertx = Vertx.vertx()
+    vertx.deployVerticle(UserService.newInstance())
+    return vertx
+  }()
 
   @Override
   Map handleRequest(Map input, Context context) {
-    CompletableFuture<Map> future = new CompletableFuture<>()
-    def address = "${input.httpMethod}:${input.resource}"
-    vertx().eventBus().send(address, input, { ar ->
-      if (ar.succeeded()) {
-        log.info "Received reply: ${ar.result().body()}"
-        future.complete(ar.result().body())
+    final future = new CompletableFuture<Map>()
+
+    // Send message to event bus using httpmethod:resource as dynamic channel
+    final eventBusAddress = "${input.httpMethod}:${input.resource}"
+    vertxInstance.eventBus().send(eventBusAddress, input, { asyncResult ->
+      if (asyncResult.succeeded()) {
+        future.complete(asyncResult.result().body())
+      } else {
+        future.completeExceptionally(asyncResult.cause())
       }
     })
+
     future.get(5, TimeUnit.SECONDS)
   }
 
-  @Memoized
-  Vertx vertx() {
-    System.setProperty('vertx.disableFileCPResolving', 'true')
-    def vertx = Vertx.vertx()
-    def eventBus = vertx.eventBus()
+  class UserService extends AbstractVerticle {
+    @Override
+    void start() throws Exception {
 
-    eventBus.consumer('GET:/users') { message ->
-      message.reply([statusCode: 200, body: 'GET:/users'])
+      final eventBus = vertx.eventBus()
+
+      eventBus.consumer('GET:/users') { message ->
+        message.reply([statusCode: 200, body: 'Received GET:/users'])
+      }
+
+      eventBus.consumer('GET:/users/{lastName}') { message ->
+        message.reply([statusCode: 200, body: 'Received GET:/users/{lastName}'])
+      }
+
+      eventBus.consumer('POST:/users/create') { message ->
+        message.reply([statusCode: 201, body: 'Received POST:/users/create'])
+      }
     }
-
-    eventBus.consumer('GET:/users/{lastName}') { message ->
-      message.reply([statusCode: 200, body: 'GET:/users/{lastName}'])
-    }
-
-    eventBus.consumer('POST:/users/create') { message ->
-      message.reply([statusCode: 201, body: 'POST:/users/create'])
-    }
-
-    return vertx
   }
 }
